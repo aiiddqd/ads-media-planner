@@ -1,16 +1,16 @@
 {
-  "name": "wordpress-snippets-u7",
-  "version": "1.2.0",
-  "description": "Snippets for WordPress: functions, hooks and etc",
+  "name": "woocommerce-snippets-u7",
+  "version": "1.0",
+  "description": "Snippets for WooCommerce: functions, hooks and etc",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/uptimizt/atom-wordpress-snippets-u7.git"
+    "url": "https://github.com/uptimizt/atom-woocommerce-snippets-u7.git"
   },
   "bugs": {
-    "url": "https://github.com/uptimizt/atom-wordpress-snippets-u7/issues"
+    "url": "https://github.com/uptimizt/atom-woocommerce-snippets-u7/issues"
   },
   "license": "MIT",
   "dependencies": {},
