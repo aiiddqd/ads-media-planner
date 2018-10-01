@@ -1,7 +1,8 @@
-# atom-wordpress-snippets-u7
-WordPress's snippets for Atom IDE by Uptimizt :)
+# atom-woocommerce-snippets-u7
 
-Some WordPress functions, hooks and snippets for [Atom IDE](https://atom.io/).
+WooCommerce's snippets for Atom IDE by @uptimizt
+
+Some WooCommerce functions, hooks and snippets for [Atom IDE](https://atom.io/).
 
 
 ## Installation
@@ -9,9 +10,11 @@ Some WordPress functions, hooks and snippets for [Atom IDE](https://atom.io/).
 Run the following command:
 
 ```sh
-apm install https://github.com/uptimizt/atom-wordpress-snippets-u7
+apm install https://github.com/uptimizt/atom-woocommerce-snippets-u7
 ```
 
 ## Related
 
-* https://github.com/uptimizt/atom-wordpress-snippets-u7
+* https://github.com/uptimizt/atom-woocommerce-snippets-u7
+
+* https://github.com/uptimizt/atom-wordpress-snippets-u7 - recommendation
