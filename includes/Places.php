@@ -141,9 +141,9 @@ class Places
     public static function addMetaBox()
     {
         add_meta_box(
-            id: 'ad-places',
-            title: 'Ad Places',
-            callback: function ($post) {
+            'ad-places',
+            'Ad Places',
+            function ($post) {
                 $selected_place = get_post_meta($post->ID, '_ad_places', true);
                 if (is_array($selected_place)) {
                     $selected_place = reset($selected_place);
@@ -161,9 +161,9 @@ class Places
             </div>
             <?php
             },
-            screen: 'ad-block',
-            context: 'side',
-            priority: 'default'
+            'ad-block',
+            'side',
+            'default'
         );
 
 

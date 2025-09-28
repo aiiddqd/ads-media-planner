@@ -51,18 +51,18 @@ class Settings
         register_setting(self::$option_group, self::$option_name);
 
         add_settings_section(
-            id: self::$section_general,
-            title: 'General',
-            callback: function () {
+            self::$section_general,
+            'General',
+            function () {
                 echo '<p>Configure the Ads Media Planner settings below.</p>';
             },
-            page: self::$page_settings
+            self::$page_settings
         );
 
         add_settings_field(
-            id: 'enable',
-            title: 'Enable',
-            callback: function ($args) {
+            'enable',
+            'Enable',
+            function ($args) {
 
                 $value = self::get('enable');
                 printf(
@@ -74,8 +74,8 @@ class Settings
 
             <?php
             },
-            page: self::$page_settings,
-            section: self::$section_general
+            self::$page_settings,
+            self::$section_general
         );
     }
 
@@ -89,10 +89,6 @@ class Settings
             'ads-media-planner-settings',
             [self::class, 'render_options_page']
         );
-
-
-
-        // self::addFields();
     }
 
     public static function render_options_page()

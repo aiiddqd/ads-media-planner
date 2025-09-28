@@ -15,9 +15,9 @@ class HeaderAssets
     public static function register_settings()
     {
         add_settings_field(
-            id: 'header_code',
-            title: 'Header Code',
-            callback: function () {
+            'header_code',
+            'Header Code',
+            function () {
                 $value = Settings::get('header_code') ?? '';
                 printf(
                     '<textarea name="%s" rows="10" cols="50" class="large-text code">%s</textarea>',
@@ -26,8 +26,8 @@ class HeaderAssets
                 );
                 echo '<p class="description">Code to be added in the &lt;head&gt; section of the site.</p>';
             },
-            page: Settings::$page_settings,
-            section: Settings::$section_general
+            Settings::$page_settings,
+            Settings::$section_general
         );
     }
 
