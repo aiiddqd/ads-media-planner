@@ -26,7 +26,10 @@ Whether you're managing a small blog or a large news publication, this plugin de
 ## Shortcode [ads_media_planner]
 Use the shortcode `[ads_media_planner]` to display ads in posts, pages, or widgets. Customize the placement and frequency of ads using the plugin's settings.
 
-Example:
+**Example:**
+
+use slug of the block or place name
+
 ```
 [ads_media_planner block="ads_banner_1"]
 ```
