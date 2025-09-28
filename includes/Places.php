@@ -123,7 +123,7 @@ class Placements
         $content = self::getBlocksForPlace('fullscreen-in-body');
         $content = trim($content);
         if ($content) {
-            echo $content;
+            printf('<div class="ad-media-planner ad-fullscreen-in-body">%s</div>', $content);
         }
     }
 
