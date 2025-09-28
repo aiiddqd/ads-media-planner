@@ -9,10 +9,7 @@ class AdBlock
     public static function init()
     {
         add_filter('wp_editor_settings', [self::class, 'disable_wysiwyg_for_ad_block']);
-
         add_action('init', [self::class, 'register_ad_block_post_type']);
-
-
     }
 
     public static function register_ad_block_post_type()

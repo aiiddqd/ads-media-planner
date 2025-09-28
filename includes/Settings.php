@@ -42,7 +42,7 @@ class Settings
 
     public static function isEnabled()
     {
-        return self::get('enable') === 1;
+        return self::get('enable') ?? false;
     }
 
     public static function addFields()

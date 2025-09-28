@@ -16,15 +16,63 @@ class Places
         add_action('manage_posts_custom_column', [self::class, 'addAdminListColumnContent'], 10, 2);
         add_filter('manage_edit-ad-block_columns', [self::class, 'addAdminListColumn']);
         add_action('init', function () {
+
             if (Settings::isEnabled()) {
                 add_action('wp_footer', [self::class, 'render_fullscreen_in_footer']);
                 add_action('wp_body_open', [self::class, 'render_fullscreen_in_body']);
+
+                add_filter('the_content', [self::class, 'renderAfterContent'], 100);
+                add_filter('the_content', [self::class, 'renderBeforeContent'], 5);
             }
         });
 
     }
 
-    //add place name to column ad_places
+
+    public static function addPlaces()
+    {
+        self::$places = [
+            'fullscreen-in-footer' => 'Fullscreen in Footer',
+            'fullscreen-in-body' => 'Fullscreen in Body',
+            'before_content' => 'Before Content',
+            'after_content' => 'After Content',
+        ];
+
+        self::$places = apply_filters('ads_media_planner_places', self::$places);
+    }
+
+    public static function renderAfterContent($content)
+    {
+        $advertising_content = self::getBlocksForPlace('after_content');
+        if(empty(trim($advertising_content))) {
+            return $content;
+        }
+        $advertising_content = sprintf('<div class="ad-media-planner ad-after-content">%s</div>', $advertising_content);
+
+        return $content . $advertising_content;
+    }
+
+    public static function renderBeforeContent($content)
+    {
+        $advertising_content = self::getBlocksForPlace('before_content');
+        if(empty(trim($advertising_content))) {
+            return $content;
+        }
+        $advertising_content = sprintf('<div class="ad-media-planner ad-before-content">%s</div>', $advertising_content);
+
+        return $advertising_content . $content;
+    }
+
+    public static function render_fullscreen_in_body()
+    {
+        return self::getBlocksForPlace('fullscreen-in-body');
+    }
+
+    public static function render_fullscreen_in_footer()
+    {
+        return self::getBlocksForPlace('fullscreen-in-footer');
+    }
+
     public static function addAdminListColumnContent($column, $post_id)
     {
         if ($column === 'ad_places') {
@@ -57,18 +105,6 @@ class Places
         return $new_columns;
     }
 
-
-
-    public static function render_fullscreen_in_body()
-    {
-        return self::getBlocksForPlace('fullscreen-in-body');
-    }
-
-    public static function render_fullscreen_in_footer()
-    {
-        return self::getBlocksForPlace('fullscreen-in-footer');
-    }
-
     public static function getBlocksForPlace($place)
     {
         $args = [
@@ -92,7 +128,6 @@ class Places
         return $content;
     }
 
-    //save place from MetaBox
     public static function saveMetaBox($post_id)
     {
         if (array_key_exists('ad_places', $_POST)) {
@@ -133,17 +168,5 @@ class Places
 
 
     }
-    public static function addPlaces()
-    {
-        self::$places = [
-            'fullscreen-in-footer' => 'Fullscreen in Footer',
-            'fullscreen-in-body' => 'Fullscreen in Body',
-            'before_content' => 'Before Content',
-            'after_content' => 'After Content',
-        ];
 
-        self::$places = apply_filters('ads_media_planner_places', self::$places);
-
-
-    }
 }
