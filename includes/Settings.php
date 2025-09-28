@@ -78,7 +78,7 @@ class Settings
             self::$section_general
         );
 
-        //отключить рекламу для авторизованных посетителей
+        // disable ads for logged-in users
         add_settings_field(
             'disable_for_logged_in',
             'Disable for logged-in users',
