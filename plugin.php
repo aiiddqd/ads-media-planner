@@ -8,7 +8,7 @@
  * License: GPL2
  * Domain Path: /languages
  * Text Domain: ads-media-planner
- * Version: 0.2.250928
+ * Version: 0.3.250928
  */
 
 namespace AdsMediaPlanner;
