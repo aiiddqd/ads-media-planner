@@ -44,6 +44,17 @@ class Placements
         return Settings::get('disable_for_logged_in') ?? false;
     }
 
+    //can show Ads? if can show Ads - return true
+    public static function canShowAds()
+    {
+        if (self::isDisabledForLoggedInUsers() && is_user_logged_in()) {
+            return false;
+        }
+
+        return Settings::isEnabled();
+    }
+
+
     public static function renderShortcode($atts)
     {
 
@@ -52,11 +63,12 @@ class Placements
             return '';
         }
 
+        $wrapper = '<div class="ad-media-planner ad-shortcode">%s</div>';
         $block = $atts['block'] ?? '';
         if (! empty($block)) {
             $ads = get_post($block);
             if ($ads) {
-                return $ads->post_content;
+                return sprintf($wrapper, $ads->post_content);
             } else {
                 return '';
             }
@@ -64,7 +76,7 @@ class Placements
 
         $place = $atts['place'] ?? '';
         if ($place) {
-            return self::getBlocksForPlace($place);
+            return sprintf($wrapper, self::getBlocksForPlace($place));
         }
 
         return '';
@@ -78,6 +90,7 @@ class Placements
             'fullscreen-in-body' => 'Fullscreen in Body',
             'before_content' => 'Before Content',
             'after_content' => 'After Content',
+            'shortcode' => 'Shortcode',
         ];
 
         self::$places = apply_filters('ads_media_planner_places', self::$places);
