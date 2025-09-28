@@ -17,7 +17,9 @@ class Settings
 
     public static function init()
     {
-        add_action('admin_init', [self::class, 'add_options_page']);
+        add_action('admin_menu', [self::class, 'add_options_page']);
+        //admin_init
+        add_action('admin_init', [self::class, 'addFields']);
     }
 
     public static function get($key = null)
@@ -38,8 +40,24 @@ class Settings
         return self::$option_name."[$key]";
     }
 
+    public static function isEnabled()
+    {
+        return self::get('enable') === 1;
+    }
+
     public static function addFields()
     {
+
+        register_setting(self::$option_group, self::$option_name);
+
+        add_settings_section(
+            id: self::$section_general,
+            title: 'General',
+            callback: function () {
+                echo '<p>Configure the Ads Media Planner settings below.</p>';
+            },
+            page: self::$page_settings
+        );
 
         add_settings_field(
             id: 'enable',
@@ -63,26 +81,18 @@ class Settings
 
     public static function add_options_page()
     {
-        add_options_page(
+        add_submenu_page(
+            'edit.php?post_type=ad-block',
             'Ads Media Planner',
-            'Ads Media Planner',
+            'Settings',
             'manage_options',
-            'ads-media-planner',
+            'ads-media-planner-settings',
             [self::class, 'render_options_page']
         );
 
-        register_setting(self::$option_group, self::$option_name);
 
-        add_settings_section(
-            id: self::$section_general,
-            title: 'General',
-            callback: function () {
-                echo '<p>Configure the Ads Media Planner settings below.</p>';
-            },
-            page: self::$page_settings
-        );
 
-        self::addFields();
+        // self::addFields();
     }
 
     public static function render_options_page()
