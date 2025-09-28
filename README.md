@@ -1,4 +1,4 @@
-# **Ads Media Planner**
+# Ads Media Planner
 
 Complete WordPress Advertising Management Solution. **Ads Media Planner** is a powerful WordPress plugin that provides comprehensive advertising management directly within your WordPress dashboard. Perfect for publishers and content creators looking to optimize ad revenue while maintaining site performance.
 
@@ -8,8 +8,6 @@ Complete WordPress Advertising Management Solution. **Ads Media Planner** is a p
 - **Complete Inventory Control:** Create, manage, and organize your entire ad unit inventory from a centralized dashboard
 - **Flexible Placement Options:** Deploy ads through global site settings or precise block-based placement for maximum revenue optimization
 - **Content-Sensitive Controls:** Fine-tune ad frequency and positioning within articles to balance revenue with user experience
-- **Performance Optimization:** Control lazy loading and active-view refresh to maintain page speed while maximizing viewability
-- **Content Relevance Tools:** Suppress ads on specific categories or tags to ensure brand safety and contextual relevance
 
 ## Why Choose **Ads Media Planner**?
 
@@ -36,3 +34,8 @@ use slug of the block or place name
 ```
 [ads_media_planner place="sidebar_shortcode"]
 ```
+
+# Roadmap
+- **Performance Optimization:** Control lazy loading and active-view refresh to maintain page speed while maximizing viewability
+- **Content Relevance Tools:** Suppress ads on specific categories or tags to ensure brand safety and contextual relevance
+- **Advanced Analytics Integration:** Connect with Google Analytics and other platforms to track ad performance and user engagement
