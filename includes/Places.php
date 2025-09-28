@@ -2,25 +2,32 @@
 
 namespace AdsMediaPlanner;
 
-Places::init();
+/**
+ * todo - rename file to Placements.php
+ */
+Placements::init();
 
-class Places
+class Placements
 {
     public static $places = [];
 
     public static function init()
     {
+        add_shortcode('ads_media_planner', [self::class, 'renderShortcode']);
+
         add_action('init', [self::class, 'addPlaces']);
         add_action('add_meta_boxes', [self::class, 'addMetaBox']);
         add_action('save_post', [self::class, 'saveMetaBox']);
         add_action('manage_posts_custom_column', [self::class, 'addAdminListColumnContent'], 10, 2);
         add_filter('manage_edit-ad-block_columns', [self::class, 'addAdminListColumn']);
 
-        add_shortcode('ads_media_planner', [self::class, 'renderShortcode']);
-
         add_action('init', function () {
 
             if (Settings::isEnabled()) {
+                if (self::isDisabledForLoggedInUsers() && is_user_logged_in()) {
+                    return;
+                }
+
                 add_action('wp_footer', [self::class, 'render_fullscreen_in_footer']);
                 add_action('wp_body_open', [self::class, 'render_fullscreen_in_body']);
 
@@ -31,7 +38,20 @@ class Places
 
     }
 
-    public static function renderShortcode($atts) {
+    //is disable for logged in users
+    public static function isDisabledForLoggedInUsers()
+    {
+        return Settings::get('disable_for_logged_in') ?? false;
+    }
+
+    public static function renderShortcode($atts)
+    {
+
+        //if disable for logged in users
+        if (self::isDisabledForLoggedInUsers() && is_user_logged_in()) {
+            return '';
+        }
+
         $block = $atts['block'] ?? '';
         if (! empty($block)) {
             $ads = get_post($block);
@@ -43,7 +63,7 @@ class Places
         }
 
         $place = $atts['place'] ?? '';
-        if($place){
+        if ($place) {
             return self::getBlocksForPlace($place);
         }
 
@@ -66,33 +86,41 @@ class Places
     public static function renderAfterContent($content)
     {
         $advertising_content = self::getBlocksForPlace('after_content');
-        if(empty(trim($advertising_content))) {
+        if (empty(trim($advertising_content))) {
             return $content;
         }
         $advertising_content = sprintf('<div class="ad-media-planner ad-after-content">%s</div>', $advertising_content);
 
-        return $content . $advertising_content;
+        return $content.$advertising_content;
     }
 
     public static function renderBeforeContent($content)
     {
         $advertising_content = self::getBlocksForPlace('before_content');
-        if(empty(trim($advertising_content))) {
+        if (empty(trim($advertising_content))) {
             return $content;
         }
         $advertising_content = sprintf('<div class="ad-media-planner ad-before-content">%s</div>', $advertising_content);
 
-        return $advertising_content . $content;
+        return $advertising_content.$content;
     }
 
     public static function render_fullscreen_in_body()
     {
-        return self::getBlocksForPlace('fullscreen-in-body');
+        $content = self::getBlocksForPlace('fullscreen-in-body');
+        $content = trim($content);
+        if ($content) {
+            echo $content;
+        }
     }
 
     public static function render_fullscreen_in_footer()
     {
-        return self::getBlocksForPlace('fullscreen-in-footer');
+        $content = self::getBlocksForPlace('fullscreen-in-footer');
+        $content = trim($content);
+        if ($content) {
+            printf('<div class="ad-media-planner ad-fullscreen-in-footer">%s</div>', $content);
+        }
     }
 
     public static function addAdminListColumnContent($column, $post_id)

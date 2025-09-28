@@ -77,6 +77,26 @@ class Settings
             self::$page_settings,
             self::$section_general
         );
+
+        //отключить рекламу для авторизованных посетителей
+        add_settings_field(
+            'disable_for_logged_in',
+            'Disable for logged-in users',
+            function ($args) {
+
+                $value = self::get('disable_for_logged_in');
+                printf(
+                    '<input type="checkbox" name="%s" value="1" %s>',
+                    esc_attr(self::getFieldName('disable_for_logged_in')),
+                    checked($value, 1, false)
+                );
+                ?>
+
+            <?php
+            },
+            self::$page_settings,
+            self::$section_general
+        );
     }
 
     public static function add_options_page()
