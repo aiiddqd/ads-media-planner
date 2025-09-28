@@ -23,3 +23,13 @@ Whether you're managing a small blog or a large news publication, this plugin de
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Navigate to the 'Ads Media Planner' settings page to configure your ad server connection and inventory.
 
+## Shortcode [ads_media_planner]
+Use the shortcode `[ads_media_planner]` to display ads in posts, pages, or widgets. Customize the placement and frequency of ads using the plugin's settings.
+
+Example:
+```
+[ads_media_planner block="ads_banner_1"]
+```
+```
+[ads_media_planner place="sidebar_shortcode"]
+```

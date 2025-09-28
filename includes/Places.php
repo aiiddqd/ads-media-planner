@@ -15,6 +15,9 @@ class Places
         add_action('save_post', [self::class, 'saveMetaBox']);
         add_action('manage_posts_custom_column', [self::class, 'addAdminListColumnContent'], 10, 2);
         add_filter('manage_edit-ad-block_columns', [self::class, 'addAdminListColumn']);
+
+        add_shortcode('ads_media_planner', [self::class, 'renderShortcode']);
+
         add_action('init', function () {
 
             if (Settings::isEnabled()) {
@@ -26,6 +29,25 @@ class Places
             }
         });
 
+    }
+
+    public static function renderShortcode($atts) {
+        $block = $atts['block'] ?? '';
+        if (! empty($block)) {
+            $ads = get_post($block);
+            if ($ads) {
+                return $ads->post_content;
+            } else {
+                return '';
+            }
+        }
+
+        $place = $atts['place'] ?? '';
+        if($place){
+            return self::getBlocksForPlace($place);
+        }
+
+        return '';
     }
 
 
