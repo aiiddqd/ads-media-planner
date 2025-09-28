@@ -24,7 +24,7 @@ class Placements
         add_action('init', function () {
 
             if (Settings::isEnabled()) {
-                if (self::isDisabledForLoggedInUsers() && is_user_logged_in()) {
+                if (!self::canShowAds()) {
                     return;
                 }
 
