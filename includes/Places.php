@@ -24,9 +24,12 @@ class Placements
         add_action('init', function () {
 
             if (Settings::isEnabled()) {
-                if (!self::canShowAds()) {
+                if (! self::canShowAds()) {
                     return;
                 }
+
+                // add_action('template_redirect', [self::class, 'runActionsForPlaces'], 555);
+                // self::runActionsForPlaces();
 
                 add_action('wp_footer', [self::class, 'render_fullscreen_in_footer']);
                 add_action('wp_body_open', [self::class, 'render_fullscreen_in_body']);
@@ -36,6 +39,33 @@ class Placements
             }
         });
 
+    }
+
+
+    //add actions for each place
+    public static function runActionsForPlaces()
+    {
+        foreach (self::$places as $key => $label) {
+            add_action('ads_media_planner/place/'.$key, function ($key) {
+                ?>
+                <div class="ads-media-planner ads-place-<?php echo esc_attr($key); ?>">
+                    <?php echo self::getBlocksForPlace($key); ?>
+                </div>
+                <?php
+            });
+
+            add_action('ads_media_planner/place', function ($key) {
+                ?>
+                <div class="ads-media-planner ads-place-<?php echo esc_attr($key); ?>">
+                    <?php echo self::getBlocksForPlace($key); ?>
+                </div>
+                <?php
+            });
+
+            // if (method_exists(self::class, $function_name)) {
+            // add_action('wp_footer', [self::class, $function_name]);
+            // }
+        }
     }
 
     //is disable for logged in users
@@ -54,10 +84,8 @@ class Placements
         return Settings::isEnabled();
     }
 
-
     public static function renderShortcode($atts)
     {
-
         //if disable for logged in users
         if (self::isDisabledForLoggedInUsers() && is_user_logged_in()) {
             return '';
@@ -66,7 +94,7 @@ class Placements
         $wrapper = '<div class="ad-media-planner ad-shortcode">%s</div>';
         $block = $atts['block'] ?? '';
         if (! empty($block)) {
-            $ads = get_post($block);
+            $ads = get_page_by_path($block, OBJECT, 'ad-block');
             if ($ads) {
                 return sprintf($wrapper, $ads->post_content);
             } else {
@@ -131,6 +159,7 @@ class Placements
     {
         $content = self::getBlocksForPlace('fullscreen-in-footer');
         $content = trim($content);
+
         if ($content) {
             printf('<div class="ad-media-planner ad-fullscreen-in-footer">%s</div>', $content);
         }
