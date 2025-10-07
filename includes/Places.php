@@ -29,7 +29,7 @@ class Placements
                 }
 
                 // add_action('template_redirect', [self::class, 'runActionsForPlaces'], 555);
-                self::runActionsForPlaces();
+                // self::runActionsForPlaces();
 
                 add_action('wp_footer', [self::class, 'render_fullscreen_in_footer']);
                 add_action('wp_body_open', [self::class, 'render_fullscreen_in_body']);
