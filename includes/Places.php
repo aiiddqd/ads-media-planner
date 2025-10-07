@@ -84,10 +84,8 @@ class Placements
         return Settings::isEnabled();
     }
 
-
     public static function renderShortcode($atts)
     {
-
         //if disable for logged in users
         if (self::isDisabledForLoggedInUsers() && is_user_logged_in()) {
             return '';
@@ -96,7 +94,7 @@ class Placements
         $wrapper = '<div class="ad-media-planner ad-shortcode">%s</div>';
         $block = $atts['block'] ?? '';
         if (! empty($block)) {
-            $ads = get_post($block);
+            $ads = get_page_by_path($block, OBJECT, 'ad-block');
             if ($ads) {
                 return sprintf($wrapper, $ads->post_content);
             } else {
